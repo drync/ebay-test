@@ -1,0 +1,19 @@
+<%= form_tag listings_path do %>
+<% if @errors.present? %>
+  <ul>
+  <% @errors.each do |e| %>
+    <li><%= e %></li>
+  <% end %>
+  </ul>
+<% end %>
+   
+  <p>
+    <label>SKU</label>
+    <%= text_field_tag "sku" %>
+  </p>
+  <p>
+    <label>Name</label>
+    <%= text_field_tag "name" %>
+  </p>
+  <%= submit_tag "Submit" %>
+<% end %>
