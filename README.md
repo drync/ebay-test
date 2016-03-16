@@ -1,8 +1,10 @@
-== ebay-test
+ebay-test
+=========
 
 A test harness for messing around with ebay.
 
-== Configuration
+Configuration
+-------------
 
 Set these values in the environment.
 
