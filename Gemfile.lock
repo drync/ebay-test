@@ -6,6 +6,13 @@ GIT
       money (~> 6.5.1)
       xml-mapping (~> 0.8.0)
 
+GIT
+  remote: git://github.com/kliuless/deterministic.git
+  revision: c17c1bbc65b7ca24800c96fdf7463f851a828a21
+  ref: c17c1bb
+  specs:
+    deterministic (0.15.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -107,6 +114,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  deterministic!
   ebayapi!
   jquery-rails
   puma
@@ -116,4 +124,4 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
