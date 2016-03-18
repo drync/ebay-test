@@ -5,22 +5,63 @@ class ListingsController < ApplicationController
   end
 
   def create
+    @listing = current_user.listings.build(:name => params[:name])
+
+    begin
+      response = ebay.add_fixed_price_item(item: build_item(@listing))
+      @listing.ebay_uid = response.item_id
+      @listing.save!
+      redirect_to listings_path
+    rescue Ebay::RequestError => e
+      @errors = e.errors.map(&:long_message)
+      render :new
+    end
+  end
+
+  def index
+    @listings = current_user.listings
+  end
+
+  def edit
+    @listing = current_user.listings.find(params[:id])
+  end
+
+  def update
+    @listing = current_user.listings.find(params[:id])
+
+    begin
+      ebay.review_fixed_price_item(:item => build_item(@listing))
+      redirect_to listings_path
+    rescue Ebay::RequestError => e
+      @errors = e.errors.map(&:long_message)
+      render :edit
+    end
+  end
+
+  private
+
+  def ebay
+    @ebay ||= Ebay::Api.new(:auth_token => current_user.auth_token)
+  end
+
+  def build_item(listing)
     # Wine: 26270
     # Red Wine: 38182
 
-    item = Item.new(
+    price = params[:price]
+
+    Item.new(
       :primary_category => Category.new(:category_id => 38182),
       :category_mapping_allowed => true,
-      :title => params[:name],
-      :sku => params[:sku],
+      :title => listing.name,
       :application_data => "Created by Drync",
       :auto_pay => true,
       :description => 'Probably a wine. Probably in a bottle.',
       :inventory_tracking_method => InventoryTrackingMethodCode::SKU,
       :location => 'Somerville, MA',
       :postal_code => '02144',
-      :start_price => Money.new(1500, 'USD'),
-      :quantity => 5,
+      :start_price => Money.new(price, 'USD'),
+      :quantity => params[:quantity],
       :listing_duration => ListingDurationCode::GTC,
       :country => 'US',
       :currency => 'USD',
@@ -46,21 +87,8 @@ class ListingsController < ApplicationController
           )
         ]
       )
-    )
-
-    ebay = Ebay::Api.new(:auth_token => current_user.auth_token)
-
-    begin
-      response = ebay.add_fixed_price_item(item: item)
-      current_user.listings.create!(:name => params[:name], :ebay_uid => response.item_id)
-      redirect_to listings_path
-    rescue Ebay::RequestError => e
-      @errors = e.errors.map(&:long_message)
-      render :new
+    ).tap do |item|
+      item.sku = params[:sku] if params[:sku]
     end
-  end
-
-  def index
-    @listings = current_user.listings
   end
 end
