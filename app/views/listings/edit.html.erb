@@ -1,4 +1,4 @@
-<%= form_tag listing_path(@listing) do %>
+<%= form_tag listing_path(@listing), method: 'PUT' do %>
 <% if @errors.present? %>
   <ul>
   <% @errors.each do |e| %>

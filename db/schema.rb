@@ -11,12 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160316175258) do
+ActiveRecord::Schema.define(:version => 20160318175643) do
 
   create_table "listings", :force => true do |t|
     t.integer "user_id",  :null => false
     t.string  "name",     :null => false
     t.string  "ebay_uid", :null => false
+    t.string  "sku"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string "name"
+    t.string "ebay_uid"
   end
 
   create_table "users", :force => true do |t|

@@ -30,3 +30,4 @@ gem 'puma'
 gem 'ebayapi', github: 'Sellbrite/ebay'
 
 gem 'rails_12factor'
+gem 'deterministic'
