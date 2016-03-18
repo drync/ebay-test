@@ -1,6 +1,6 @@
 <ul>
 <% @listings.each do |listing| %>
-  <li><%= listing.name %></li>
+  <li><%= link_to listing.name, "http://cgi.sandbox.ebay.com/#{listing.ebay_uid}", :target => '_blank' %></li>
 <% end %>
 </ul>
 
