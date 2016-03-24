@@ -8,7 +8,19 @@
 </head>
 <body>
 
-<%= yield %>
+  <% if alert = flash[:alert] %>
+  <div class="flash alert">
+    <%= simple_format alert %>
+  </div>
+  <% end %>
+
+  <% if notice = flash[:notice] %>
+  <div class="flash notice">
+    <%= simple_format notice %>
+  </div>
+  <% end %>
+
+  <%= yield %>
 
 </body>
 </html>

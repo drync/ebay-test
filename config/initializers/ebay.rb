@@ -8,4 +8,9 @@ Ebay::Api.configure do |ebay|
   ebay.use_sandbox = true
 
   ebay.logger = Rails.logger
+
+  # Override endpoint - use for proxying the request
+  if url = ENV['EBAY_URL']
+    ebay.sandbox_url = url
+  end
 end

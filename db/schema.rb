@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(:version => 20160318175643) do
   end
 
   create_table "users", :force => true do |t|
-    t.string "username",                   :null => false
-    t.string "auth_token", :limit => 2048, :null => false
+    t.string "username",   :null => false
+    t.string "auth_token", :null => false
   end
 
 end

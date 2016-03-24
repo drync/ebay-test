@@ -1,0 +1,10 @@
+<div>
+<% @orders.each do |order| %>
+  <h3><%= number_to_currency(order.total) %> <%= order.order_id %></h3>
+  <ul>
+  <% order.transactions.each do |t| %>
+    <li><%= t.item.title %></li>
+  <% end %>
+  </ul>
+<% end %>
+</div>

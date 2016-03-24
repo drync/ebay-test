@@ -1,6 +1,5 @@
 class ListingsController < ApplicationController
   include Ebay::Types
-  include Deterministic::Prelude::Result
 
   def new
   end
@@ -57,19 +56,6 @@ class ListingsController < ApplicationController
   end
 
   private
-
-  def ebay
-    @ebay ||= Ebay::Api.new(:auth_token => current_user.auth_token)
-  end
-
-  # Convert routine exceptions into soft failures
-  def wrap_error
-    begin
-      Success(yield)
-    rescue Ebay::RequestError => e
-      Failure(e)
-    end
-  end
 
   def build_item(listing)
     # Wine: 26270
